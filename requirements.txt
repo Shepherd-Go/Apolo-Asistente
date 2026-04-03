@@ -5,6 +5,8 @@ pyttsx3
 anthropic
 tavily-python
 python-dotenv
-pygetwindow
 tzdata
-youtube-search-python
+yt-dlp
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2

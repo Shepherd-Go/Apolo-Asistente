@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(powershell \"Get-ChildItem 'C:\\\\Users\\\\ACER\\\\AppData\\\\Local\\\\Programs\\\\' -Directory | Select-Object Name\")",
-      "Bash(powershell \"Get-ChildItem 'C:\\\\Users\\\\ACER\\\\AppData\\\\Local\\\\Programs\\\\Opera\\\\' -Filter '*.exe' | Select-Object FullName\")"
+      "Bash(powershell \"Get-ChildItem 'C:\\\\Users\\\\ACER\\\\AppData\\\\Local\\\\Programs\\\\Opera\\\\' -Filter '*.exe' | Select-Object FullName\")",
+      "Bash(pip install:*)",
+      "Bash(pre-commit install:*)",
+      "Bash(pre-commit run:*)"
     ]
   }
 }

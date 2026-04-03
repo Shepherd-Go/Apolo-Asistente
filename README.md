@@ -31,7 +31,7 @@ TAVILY_API_KEY=tvly-tu-key-aquí
 
 **4. Corre Apolo**
 ```bash
-python apolo-asistente.py
+python main.py
 ```
 
 ## Comandos de voz
@@ -45,6 +45,44 @@ python apolo-asistente.py
 | Cualquier pregunta | Busca en internet y responde con IA |
 | "para" / "adiós" | Sale del modo conversación |
 | "olvida todo" | Borra el historial de la conversación |
+
+## Configuración de zona horaria
+
+Edita `config_usuario.json` en la raíz del proyecto:
+
+```json
+{
+  "zona_horaria": "America/Bogota"
+}
+```
+
+### Zonas horarias de Latinoamérica
+
+| País | Zona horaria |
+|---|---|
+| Argentina | `America/Argentina/Buenos_Aires` |
+| Bolivia | `America/La_Paz` |
+| Brasil (Brasilia) | `America/Sao_Paulo` |
+| Brasil (Manaos) | `America/Manaus` |
+| Chile | `America/Santiago` |
+| Colombia | `America/Bogota` |
+| Costa Rica | `America/Costa_Rica` |
+| Cuba | `America/Havana` |
+| Ecuador | `America/Guayaquil` |
+| El Salvador | `America/El_Salvador` |
+| Guatemala | `America/Guatemala` |
+| Honduras | `America/Tegucigalpa` |
+| México (Ciudad de México) | `America/Mexico_City` |
+| México (Cancún) | `America/Cancun` |
+| México (Tijuana) | `America/Tijuana` |
+| Nicaragua | `America/Managua` |
+| Panamá | `America/Panama` |
+| Paraguay | `America/Asuncion` |
+| Perú | `America/Lima` |
+| Puerto Rico | `America/Puerto_Rico` |
+| República Dominicana | `America/Santo_Domingo` |
+| Uruguay | `America/Montevideo` |
+| Venezuela | `America/Caracas` |
 
 ## Flujo de contribución
 
