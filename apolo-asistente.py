@@ -69,6 +69,7 @@ COMANDO_HORA     = ["hora", "tiempo", "fecha", "día"]
 COMANDO_MUSICA   = ["pon ", "reproduce ", "busca ", "ponme ", "toca "]
 COMANDO_PARAR    = ["para", "adiós", "adios", "detente", "stop"]
 COMANDO_OLVIDAR  = ["olvida todo", "borra el historial", "limpia el historial", "nueva conversación"]
+COMANDO_CLIMA    = ["clima", "tiempo en", "temperatura", "lluvia", "pronóstico"]
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  Estado global
@@ -247,6 +248,12 @@ def procesar_comando(texto: str):
     if (tiene_wake or modo_conv) and any(p in texto_lower for p in COMANDO_MUSICA):
         query = texto_lower.replace(WAKE_WORD, "").strip()
         buscar_musica(query)
+        return
+
+    if (tiene_wake or modo_conv) and any(p in texto_lower for p in COMANDO_CLIMA):
+        ciudad = texto_lower.replace(WAKE_WORD, "").replace("clima", "").replace("tiempo en", "").replace("temperatura", "").replace("pronóstico", "").strip()
+        consulta = f"¿Cómo está el clima ahora en {ciudad if ciudad else 'Colombia'}?"
+        preguntar_claude(consulta)
         return
 
     # ── Salir del modo conversación ───────────────────────────────────────────
