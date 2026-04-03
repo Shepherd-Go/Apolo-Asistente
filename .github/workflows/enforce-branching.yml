@@ -1,0 +1,60 @@
+name: Validar flujo de ramas
+
+on:
+  pull_request:
+    types: [opened, reopened, edited]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  validar:
+    name: Verificar rama base
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verificar reglas de branching
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const head = context.payload.pull_request.head.ref;
+            const base = context.payload.pull_request.base.ref;
+            const pr   = context.payload.pull_request.number;
+
+            let error = null;
+
+            // dev solo puede apuntar a main
+            if (head === "dev" && base !== "main") {
+              error = `❌ La rama \`dev\` solo puede hacer PR hacia \`main\`, no hacia \`${base}\`.`;
+            }
+
+            // Ramas feature solo pueden apuntar a dev
+            if (head !== "dev" && head !== "main" && base === "main") {
+              error = `❌ Las ramas de feature solo pueden hacer PR hacia \`dev\`, no directamente a \`main\`.\n\nCambia la rama base a \`dev\` y vuelve a intentarlo.`;
+            }
+
+            // Nadie puede hacer PR desde main
+            if (head === "main") {
+              error = `❌ No se puede hacer PR desde la rama \`main\`.`;
+            }
+
+            if (error) {
+              // Comentar en el PR
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr,
+                body: `### 🚦 Flujo de ramas incorrecto\n\n${error}\n\n**Flujo correcto:**\n\`\`\`\nfeature/* → dev → main\n\`\`\``
+              });
+
+              // Cerrar el PR
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr,
+                state: "closed"
+              });
+
+              core.setFailed(error);
+            }
