@@ -1,28 +1,59 @@
-# 👏 Jarvis - Double Clap Home Automation
+# Apolo - Asistente de voz
 
-Aplaude 2 veces y Jarvis te da la bienvenida, pone música y abre tus apps.
+Asistente de voz en español con IA. Di "Apolo" y hazle cualquier pregunta.
 
-## ¿Qué hace?
-1. Detecta 2 aplausos por el micrófono
-2. Una voz dice **"Bienvenido a casa, señor Tatay"**
-3. Abre YouTube con tu canción
-4. Abre **Claude** y **Cursor** lado a lado
+## Requisitos
+
+- Windows 10/11
+- Python 3.9+
+- Micrófono
+- Cuenta en [Anthropic](https://console.anthropic.com) (Claude API)
+- Cuenta en [Tavily](https://tavily.com) (búsquedas en internet)
 
 ## Instalación
 
+**1. Clona el repositorio**
 ```bash
-pip install sounddevice numpy pyttsx3
+git clone <url-del-repo>
+cd jarvis
 ```
 
-## Uso
-
+**2. Instala las dependencias**
 ```bash
-python bienvenido_jarvis.py
+pip install -r requirements.txt
 ```
 
-> Si no detecta los aplausos, ajusta `THRESHOLD` en el script (sube el valor si hay ruido, bájalo si no detecta).
+**3. Crea el archivo `.env`** con tus API keys
+```
+ANTHROPIC_API_KEY=sk-ant-tu-key-aquí
+TAVILY_API_KEY=tvly-tu-key-aquí
+```
 
-## Requisitos
-- macOS
-- Python 3.9+
-- Micrófono
+**4. Corre Apolo**
+```bash
+python apolo-asistente.py
+```
+
+## Comandos de voz
+
+| Di esto | Resultado |
+|---|---|
+| "Apolo" | Activa el modo conversación |
+| "Apolo abre el Dota" | Abre Dota 2 via Steam |
+| "Apolo qué hora es" | Dice el día, fecha y hora (Colombia) |
+| "Apolo pon X canción" | Busca y abre la canción en YouTube |
+| Cualquier pregunta | Busca en internet y responde con IA |
+| "para" / "adiós" | Sale del modo conversación |
+| "olvida todo" | Borra el historial de la conversación |
+
+## Inicio automático con Windows
+
+1. Presiona **Win + R** → escribe `shell:startup` → Enter
+2. Copia `iniciar_jarvis.bat` a esa carpeta
+
+## Ajuste del micrófono
+
+Si Apolo no te escucha:
+- Ve a **Panel de control → Sonido → Grabación → Micrófono → Propiedades → Mejoras**
+- Marca **"Deshabilitar todos los efectos de sonido"**
+- Ajusta `VOZ_THRESHOLD` en el script si sigue fallando (bajar = más sensible)
