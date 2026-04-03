@@ -46,6 +46,20 @@ python apolo-asistente.py
 | "para" / "adiós" | Sale del modo conversación |
 | "olvida todo" | Borra el historial de la conversación |
 
+## Flujo de contribución
+
+```
+feat/mi-rama  →  dev  →  main
+```
+
+1. Crea tu rama desde `dev`: `git checkout -b feat/mi-feature`
+2. Haz tus cambios y push
+3. Abre un PR apuntando a `dev`
+4. El dueño del repo aprueba y mergea
+5. Cuando `dev` esté listo, se abre un PR de `dev` → `main`
+
+> ⚠️ No se aceptan PRs de ramas feature directamente a `main`.
+
 ## Inicio automático con Windows
 
 1. Presiona **Win + R** → escribe `shell:startup` → Enter
