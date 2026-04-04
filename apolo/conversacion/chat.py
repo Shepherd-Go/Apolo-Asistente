@@ -1,10 +1,10 @@
 import time
 from apolo.config import claude_client, tavily_client
 from apolo.tts import hablar
-from apolo.memory import memoria_como_texto, extraer_y_guardar
+from apolo.conversacion.memoria import memoria_como_texto, extraer_y_guardar
 
-historial:   list  = []
-modo_conv:   bool  = False
+historial: list = []
+modo_conv: bool = False
 ultimo_habla: float = 0.0
 
 
@@ -49,7 +49,8 @@ def preguntar_claude(pregunta: str):
 
     contenido = (
         f"Pregunta: {pregunta}\n\nInformación reciente de internet:\n{contexto}"
-        if contexto else pregunta
+        if contexto
+        else pregunta
     )
 
     historial.append({"role": "user", "content": contenido})

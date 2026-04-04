@@ -3,9 +3,9 @@ import numpy as np
 from apolo.config import VOZ_THRESHOLD, SILENCIO_LIMITE, MAX_BLOQUES
 
 audio_queue: queue.Queue = queue.Queue()
-grabando     = False
+grabando = False
 silencio_cnt = 0
-voz_buffer   = []
+voz_buffer = []
 
 
 def audio_callback(indata, frames, time_info, status):

@@ -16,9 +16,9 @@ import sounddevice as sd
 
 from apolo.config import SAMPLE_RATE, BLOCK_SIZE, TIMEOUT_CONV
 from apolo.audio import audio_queue, audio_callback
-from apolo.conversation import modo_conv, desactivar_modo_conv
+from apolo.conversacion.chat import desactivar_modo_conv
 from apolo.processor import procesar_comando
-import apolo.conversation as conv
+import apolo.conversacion.chat as conv
 
 
 def main():

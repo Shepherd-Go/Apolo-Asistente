@@ -1,15 +1,27 @@
 import time
 from apolo.config import (
     WAKE_WORD,
-    COMANDO_DOTA, COMANDO_HORA, COMANDO_MUSICA,
-    COMANDO_PARAR, COMANDO_OLVIDAR, COMANDO_CLIMA, COMANDO_ABRIR,
+    COMANDO_DOTA,
+    COMANDO_HORA,
+    COMANDO_MUSICA,
+    COMANDO_PARAR,
+    COMANDO_OLVIDAR,
+    COMANDO_CLIMA,
+    COMANDO_ABRIR,
+    COMANDO_AGENDA,
+    COMANDO_VER_AGENDA,
 )
-from apolo.commands import buscar_musica, abrir_dota, decir_hora, buscar_y_abrir_app
-from apolo.conversation import (
-    activar_modo_conv, desactivar_modo_conv,
-    limpiar_historial, preguntar_claude,
+from apolo.musica.commands import buscar_musica
+from apolo.apps.commands import abrir_dota, buscar_y_abrir_app
+from apolo.sistema.commands import decir_hora
+from apolo.calendario.commands import agendar_evento, ver_agenda
+from apolo.conversacion.chat import (
+    activar_modo_conv,
+    desactivar_modo_conv,
+    limpiar_historial,
+    preguntar_claude,
 )
-import apolo.conversation as conv
+import apolo.conversacion.chat as conv
 
 
 def procesar_comando(texto: str):
@@ -32,6 +44,16 @@ def procesar_comando(texto: str):
         decir_hora()
         return
 
+    if (tiene_wake or conv.modo_conv) and any(p in texto_lower for p in COMANDO_AGENDA):
+        agendar_evento(texto)
+        return
+
+    if (tiene_wake or conv.modo_conv) and any(
+        p in texto_lower for p in COMANDO_VER_AGENDA
+    ):
+        ver_agenda(texto_lower)
+        return
+
     if (tiene_wake or conv.modo_conv) and any(p in texto_lower for p in COMANDO_MUSICA):
         query = texto_lower.replace(WAKE_WORD, "").strip()
         buscar_musica(query)
@@ -39,8 +61,7 @@ def procesar_comando(texto: str):
 
     if (tiene_wake or conv.modo_conv) and any(p in texto_lower for p in COMANDO_CLIMA):
         ciudad = (
-            texto_lower
-            .replace(WAKE_WORD, "")
+            texto_lower.replace(WAKE_WORD, "")
             .replace("clima", "")
             .replace("tiempo en", "")
             .replace("temperatura", "")
@@ -55,7 +76,9 @@ def procesar_comando(texto: str):
         desactivar_modo_conv()
         return
 
-    if (tiene_wake or conv.modo_conv) and any(p in texto_lower for p in COMANDO_OLVIDAR):
+    if (tiene_wake or conv.modo_conv) and any(
+        p in texto_lower for p in COMANDO_OLVIDAR
+    ):
         limpiar_historial()
         return
 

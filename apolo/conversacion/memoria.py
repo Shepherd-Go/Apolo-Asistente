@@ -37,16 +37,19 @@ def extraer_y_guardar(historial: list):
                 "Eres un extractor de preferencias. Analiza la conversación y extrae datos "
                 "personales relevantes del usuario: gustos, ciudad, nombre, hobbies, etc. "
                 "Responde SOLO con JSON válido con la clave 'nuevas' que contiene una lista de strings. "
-                "Si no hay nada relevante, responde {\"nuevas\": []}."
+                'Si no hay nada relevante, responde {"nuevas": []}.'
             ),
-            messages=historial + [{
-                "role": "user",
-                "content": "¿Qué preferencias o datos del usuario puedes extraer de esta conversación?",
-            }],
+            messages=historial
+            + [
+                {
+                    "role": "user",
+                    "content": "¿Qué preferencias o datos del usuario puedes extraer de esta conversación?",
+                }
+            ],
         )
         texto = respuesta.content[0].text
         print(f"  🧠  Respuesta extractor: {texto}")
-        match = re.search(r'\{.*\}', texto, re.DOTALL)
+        match = re.search(r"\{.*\}", texto, re.DOTALL)
         if not match:
             print("  ⚠️  No se encontró JSON en la respuesta del extractor.")
             return

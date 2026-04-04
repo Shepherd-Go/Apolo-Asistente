@@ -8,11 +8,11 @@ import os
 import subprocess
 import anthropic
 
+
 # ── Obtener último tag ────────────────────────────────────────────────────────
 def ultimo_tag():
     result = subprocess.run(
-        ["git", "tag", "--sort=-version:refname"],
-        capture_output=True, text=True
+        ["git", "tag", "--sort=-version:refname"], capture_output=True, text=True
     )
     tags = result.stdout.strip().splitlines()
     return tags[0] if tags else None
@@ -21,8 +21,7 @@ def ultimo_tag():
 def commits_desde(tag: str | None) -> list[str]:
     rango = f"{tag}..HEAD" if tag else "HEAD"
     result = subprocess.run(
-        ["git", "log", rango, "--pretty=format:%s"],
-        capture_output=True, text=True
+        ["git", "log", rango, "--pretty=format:%s"], capture_output=True, text=True
     )
     return [c.strip() for c in result.stdout.strip().splitlines() if c.strip()]
 
@@ -65,10 +64,12 @@ def generar_notas(version: str, commits: list[str]) -> str:
             "'### Mejoras'. Usa viñetas con '-'. Solo incluye secciones que tengan contenido. "
             "Sin introducciones ni conclusiones, solo las secciones."
         ),
-        messages=[{
-            "role": "user",
-            "content": f"Versión: {version}\n\nCommits:\n{commits_texto}"
-        }]
+        messages=[
+            {
+                "role": "user",
+                "content": f"Versión: {version}\n\nCommits:\n{commits_texto}",
+            }
+        ],
     )
 
     return mensaje.content[0].text.strip()
@@ -77,10 +78,10 @@ def generar_notas(version: str, commits: list[str]) -> str:
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     tag_actual = ultimo_tag()
-    commits    = commits_desde(tag_actual)
-    nueva_ver  = calcular_version(tag_actual, commits)
-    notas      = generar_notas(nueva_ver, commits)
-    nombre     = f"Apolo {nueva_ver}"
+    commits = commits_desde(tag_actual)
+    nueva_ver = calcular_version(tag_actual, commits)
+    notas = generar_notas(nueva_ver, commits)
+    nombre = f"Apolo {nueva_ver}"
 
     # Escapar saltos de línea para GitHub Actions output
     notas_escaped = notas.replace("\n", "\\n").replace("\r", "")

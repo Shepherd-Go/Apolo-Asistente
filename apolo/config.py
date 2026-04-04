@@ -9,12 +9,12 @@ from tavily import TavilyClient
 load_dotenv()
 
 # Audio
-IDIOMA          = "es-ES"
-SAMPLE_RATE     = 16000
-BLOCK_SIZE      = int(SAMPLE_RATE * 0.1)
-VOZ_THRESHOLD   = 0.02
+IDIOMA = "es-ES"
+SAMPLE_RATE = 16000
+BLOCK_SIZE = int(SAMPLE_RATE * 0.1)
+VOZ_THRESHOLD = 0.02
 SILENCIO_LIMITE = 8
-MAX_BLOQUES     = 60
+MAX_BLOQUES = 60
 
 # Conversación
 TIMEOUT_CONV = 60  # segundos sin hablar antes de salir del modo conversación
@@ -24,28 +24,88 @@ DOTA2_STEAM = "steam://rungameid/570"
 
 # Zona horaria — leída de config_usuario.json
 _config_path = Path(__file__).parent.parent / "config_usuario.json"
-_config_usuario = json.loads(_config_path.read_text(encoding="utf-8")) if _config_path.exists() else {}
+_config_usuario = (
+    json.loads(_config_path.read_text(encoding="utf-8"))
+    if _config_path.exists()
+    else {}
+)
 ZONA_USUARIO = ZoneInfo(_config_usuario.get("zona_horaria", "America/Bogota"))
 
 # Localización
 DIAS_ES = {
-    "Monday": "lunes", "Tuesday": "martes", "Wednesday": "miércoles",
-    "Thursday": "jueves", "Friday": "viernes", "Saturday": "sábado", "Sunday": "domingo"
+    "Monday": "lunes",
+    "Tuesday": "martes",
+    "Wednesday": "miércoles",
+    "Thursday": "jueves",
+    "Friday": "viernes",
+    "Saturday": "sábado",
+    "Sunday": "domingo",
 }
 MESES_ES = {
-    1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo", 6: "junio",
-    7: "julio", 8: "agosto", 9: "septiembre", 10: "octubre", 11: "noviembre", 12: "diciembre"
+    1: "enero",
+    2: "febrero",
+    3: "marzo",
+    4: "abril",
+    5: "mayo",
+    6: "junio",
+    7: "julio",
+    8: "agosto",
+    9: "septiembre",
+    10: "octubre",
+    11: "noviembre",
+    12: "diciembre",
 }
 
 # Palabras clave
-WAKE_WORD       = "apolo"
-COMANDO_DOTA    = ["dota"]
-COMANDO_HORA    = ["hora", "tiempo", "fecha", "día"]
-COMANDO_MUSICA  = ["pon ", "reproduce ", "busca ", "ponme ", "toca "]
-COMANDO_ABRIR   = ["abre ", "abrir ", "lanza ", "lanzar ", "inicia ", "iniciar ", "ejecuta ", "ejecutar "]
-COMANDO_PARAR   = ["para", "adiós", "adios", "detente", "stop"]
-COMANDO_OLVIDAR = ["olvida todo", "borra el historial", "limpia el historial", "nueva conversación"]
-COMANDO_CLIMA   = ["clima", "tiempo en", "temperatura", "lluvia", "pronóstico"]
+WAKE_WORD = "apolo"
+COMANDO_DOTA = ["dota"]
+COMANDO_HORA = ["hora", "tiempo", "fecha", "día"]
+COMANDO_MUSICA = ["pon ", "reproduce ", "ponme ", "toca "]
+COMANDO_ABRIR = [
+    "abre ",
+    "abrir ",
+    "lanza ",
+    "lanzar ",
+    "inicia ",
+    "iniciar ",
+    "ejecuta ",
+    "ejecutar ",
+]
+COMANDO_PARAR = ["para", "adiós", "adios", "detente", "stop"]
+COMANDO_OLVIDAR = [
+    "olvida todo",
+    "borra el historial",
+    "limpia el historial",
+    "nueva conversación",
+]
+COMANDO_CLIMA = ["clima", "tiempo en", "temperatura", "lluvia", "pronóstico"]
+COMANDO_AGENDA = [
+    "agéndame",
+    "agendame",
+    "agenda ",
+    "agendar",
+    "crea un evento",
+    "añade al calendario",
+    "anota ",
+    "programa ",
+]
+COMANDO_VER_AGENDA = [
+    "qué tengo",
+    "que tengo",
+    "mi agenda",
+    "mis eventos",
+    "qué hay",
+    "que hay mañana",
+    "que hay hoy",
+    "cuándo es",
+    "cuando es",
+    "en mi calendario",
+    "revisa el calendario",
+    "revisen el calendario",
+    "busca en mi calendario",
+    "tengo algo",
+    "tengo para",
+]
 
 # Clientes API
 claude_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))

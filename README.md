@@ -31,7 +31,7 @@ TAVILY_API_KEY=tvly-tu-key-aquí
 
 **4. Corre Apolo**
 ```bash
-python apolo-asistente.py
+python main.py
 ```
 
 ## Comandos de voz
